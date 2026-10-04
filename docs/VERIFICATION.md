@@ -17,7 +17,31 @@ from `uv.lock` using uv 0.8.22 with dev/notebook extras and CPU PyTorch 2.7.1.
 
 The pinned numerical environment works locally. No dataset is downloaded and no
 training or rendering is performed. Linux checks run in GitHub Actions after publication.
-Build, remote CI and protection evidence will be recorded below after completion.
+Wheel and source distribution built successfully in isolated build environments.
+Minari CLI help also executed successfully. The pip requirements wrapper was checked
+with an installation dry run against the resolved environment; no changes required.
+
+## Remote checks and review
+
+- Initial baseline commit: `f55017a04c1b36f6fec2ab0ad387c59f00291891`.
+- [Linux CI run](https://github.com/MedvAx-AI/iql-halfcheetah/actions/runs/37197602855):
+  completed successfully, check name `Scaffold checks`. Includes frozen install,
+  dependency/export consistency, lint, all tests, real environment smoke, notebook
+  schema and wheel/sdist build on Python 3.11.
+- Independent read-only scaffold review: no Critical, Important or Minor findings.
+  Algorithm/data/evaluation/finished notebook correctly remain outside M0 scope.
+- Four role issues and four roadmap milestones created; see [team handoff](TEAM_HANDOFF.md).
+
+## Git workflow configuration
+
+Feature branches start from the finalized M0 `main` commit. Squash merge is enabled;
+merge commits/rebase merge and automatic branch deletion are disabled.
+`main` protection requires the `Scaffold checks` status, up-to-date branches, one
+approving review, code-owner review, resolved conversations and linear history.
+Stale approvals are dismissed; force pushes and branch deletion are disallowed.
+Administrator enforcement is disabled so the lead retains an explicit maintenance
+bypass; contributors follow the protected PR path. See the live branch settings
+for any future changes to enforcement.
 
 ## Final team checks still required
 

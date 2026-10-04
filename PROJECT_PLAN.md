@@ -9,16 +9,16 @@ Minari provide environment and dataset. Each role owns an isolated feature branc
 
 ## Person 1 setup implementation plan
 
-- [ ] Create packaging, exact direct dependency pins, lockfile, configuration and
+- [x] Create packaging, exact direct dependency pins, lockfile, configuration and
   artifact directories. Verify an isolated install with `pip check` and wheel build.
-- [ ] Add contract tests before implementing config parsing and scaffold CLI:
+- [x] Add contract tests before implementing config parsing and scaffold CLI:
   valid defaults, invalid numeric/type/unknown fields, boolean discount, CLI success,
   unfinished entry points exit nonzero without producing artifacts.
-- [ ] Define dataset/environment/learner/train/evaluate interfaces and actionable
+- [x] Define dataset/environment/learner/train/evaluate interfaces and actionable
   stubs. Verify imports and tests without downloading data or training a model.
-- [ ] Add contribution guide, CI, templates and valid unexecuted notebook outline.
+- [x] Add contribution guide, CI, templates and valid unexecuted notebook outline.
   Verify notebook schema and real HalfCheetah reset/step in the pinned environment.
-- [ ] Publish to MedvAx-AI, create four feature branches and four measurable role
+- [x] Publish to MedvAx-AI, create four feature branches and four measurable role
   issues. Read remote state and CI; record evidence and handoff links.
 
 ## Ownership
@@ -137,5 +137,6 @@ Person 4: experiments/results. Person 5: numerical example and demo/conclusion.
 
 ## Current status
 
-M0 is the deliverable of this setup. M1–M4 remain team work. Installation and
+M0 is the deliverable of this setup; see [handoff links](docs/TEAM_HANDOFF.md).
+M1–M4 remain team work. Installation and
 contract checks do not establish learning quality or a completed final Colab.

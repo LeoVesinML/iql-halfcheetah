@@ -13,6 +13,7 @@ measured return or completed course demo is supplied at this stage.
 - [Shared interfaces and artifact formats](docs/INTERFACES.md)
 - [Contribution / Git workflow](CONTRIBUTING.md)
 - [Team tasks](https://github.com/MedvAx-AI/iql-halfcheetah/issues)
+- [Created branches, issues and milestones](docs/TEAM_HANDOFF.md)
 - [Notebook outline](notebooks/iql_halfcheetah.ipynb)
 - [Verification evidence](docs/VERIFICATION.md)
 
