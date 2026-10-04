@@ -1,7 +1,7 @@
 # Team contribution workflow
 
 `main` is the integrated baseline. @MedvAx-AI reviews interface changes and PRs.
-See role ownership and acceptance criteria in [PROJECT_PLAN.md](PROJECT_PLAN.md).
+See role ownership and acceptance criteria in [IQL_5_Person_Project_Plan.md](IQL_5_Person_Project_Plan.md).
 
 ## Work on your role branch
 
