@@ -2,14 +2,15 @@
 
 Five-person offline reinforcement learning course project led by **MedvAx-AI**.
 
-**Status: integration scaffold (M0).** The install, configuration and interfaces
-are ready for team implementation. Dataset loading, IQL, training, evaluation and
-video recording deliberately raise `NotImplementedError`. No trained agent,
-measured return or completed course demo is supplied at this stage.
+**Status: Person 2 environment/data implemented.** The install, configuration,
+interfaces, validated Minari loader and environment recovery are ready.
+IQL, training, evaluation and video recording deliberately raise `NotImplementedError`.
+No trained agent, measured agent return or completed course demo is supplied at this stage.
 
 ## Start here
 
-- [Project plan, role deliverables and roadmap](PROJECT_PLAN.md)
+- [Project plan, role deliverables and roadmap](IQL_5_Person_Project_Plan.md)
+- [Person 2 environment, preprocessing and measured dataset statistics](docs/ENVIRONMENT_DATASET.md)
 - [Shared interfaces and artifact formats](docs/INTERFACES.md)
 - [Contribution / Git workflow](CONTRIBUTING.md)
 - [Team tasks](https://github.com/MedvAx-AI/iql-halfcheetah/issues)
@@ -28,7 +29,8 @@ measured hardware budget from Person 3; changing `device` alone does not install
 Dataset: `mujoco/halfcheetah/medium-v0`, generated from HalfCheetah-v5, 1,000,000
 steps / 1,000 episodes, observations `(17,)`, actions `(6,)` in `[-1, 1]`.
 The source observations are float64; the shared training contract is float32.
-Person 2 must recover the dataset's environment specification and verify metadata.
+Person 2's loader verifies metadata; the environment factory recovers the dataset's
+specification. See the Person 2 report for the collection/runtime MuJoCo version mismatch.
 See the [official dataset card](https://minari.farama.org/datasets/mujoco/halfcheetah/medium-v0/)
 and [Gymnasium environment documentation](https://gymnasium.farama.org/environments/mujoco/half_cheetah/).
 
@@ -82,7 +84,7 @@ with appropriate driver libraries. Video/rendering is Person 4's acceptance task
 configs/halfcheetah.toml       shared starting hyperparameters
 src/iql_project/
   config.py, contracts.py     Person 1: shared config and interface contracts
-  dataset.py, environment.py  Person 2: explicit implementation stubs
+  dataset.py, environment.py  Person 2: validated loader, sampler and environment recovery
   networks.py, iql.py         Person 3: explicit implementation stubs
   train.py                   Person 3: training orchestration stub
   evaluate.py                Person 4: evaluation and recording stubs
@@ -90,6 +92,7 @@ src/iql_project/
 notebooks/                   Person 5: valid, unexecuted narrative outline
 tests/                       scaffold contract tests; role PRs add behavioral tests
 scripts/                     dependency/environment/notebook checks
+  check_dataset.py           Person 2: explicit download, statistics and recovery check
 data/                        local Minari cache guidance; data excluded from Git
 results/, videos/, checkpoints/   artifact conventions; generated files excluded
 docs/                        design, interfaces, verification, presentation outline
