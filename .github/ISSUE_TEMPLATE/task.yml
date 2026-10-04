@@ -1,0 +1,25 @@
+name: Team deliverable
+description: A measurable implementation or course deliverable
+title: "[Person N] "
+body:
+  - type: input
+    id: owner
+    attributes:
+      label: Role and feature branch
+    validations:
+      required: true
+  - type: textarea
+    id: deliverables
+    attributes:
+      label: Deliverables and acceptance checks
+      description: Use checkboxes and observable outcomes; include commands/artifact links.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies and shared interfaces
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Validation evidence and limitations

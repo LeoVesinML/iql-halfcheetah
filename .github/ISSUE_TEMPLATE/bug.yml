@@ -1,0 +1,20 @@
+name: Reproducibility or integration bug
+description: Report a failing command, interface or numerical check
+title: "[Bug] "
+body:
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps and expected/actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Commit, Python, OS, dependency profile, seed and config
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Relevant output (remove credentials and personal paths)

@@ -1,0 +1,21 @@
+# Proposed starting values; performance must be established by Persons 3–4.
+env_id = "HalfCheetah-v5"
+dataset_id = "mujoco/halfcheetah/medium-v0"
+observation_dim = 17
+action_dim = 6
+discount = 0.99
+expectile = 0.7
+# Policy weight is exp(inverse_temperature * advantage), capped at max_weight.
+inverse_temperature = 3.0
+max_weight = 100.0
+target_tau = 0.005
+learning_rate = 0.0003
+batch_size = 256
+total_steps = 500000
+eval_interval = 5000
+checkpoint_interval = 50000
+seed = 0
+device = "cpu"
+eval_episodes = 10
+eval_seed = 10000
+output_dir = "results"

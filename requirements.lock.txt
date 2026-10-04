@@ -1,0 +1,497 @@
+absl-py==2.5.0
+    # via mujoco
+anyio==4.15.1
+    # via
+    #   httpx
+    #   jupyter-server
+appnope==1.0.0 ; sys_platform == 'darwin'
+    # via ipykernel
+argon2-cffi==25.1.0
+    # via jupyter-server
+argon2-cffi-bindings==26.1.0
+    # via argon2-cffi
+arrow==1.4.0
+    # via isoduration
+asttokens==3.0.2
+    # via stack-data
+async-lru==2.3.0
+    # via jupyterlab
+attrs==26.1.0
+    # via
+    #   jsonschema
+    #   referencing
+babel==2.18.0
+    # via jupyterlab-server
+beautifulsoup4==4.15.0
+    # via nbconvert
+bleach==6.4.0
+    # via nbconvert
+build==1.3.0
+    # via iql-halfcheetah
+certifi==2026.7.22
+    # via
+    #   httpcore
+    #   httpx
+    #   requests
+cffi==2.1.1
+    # via
+    #   argon2-cffi-bindings
+    #   cryptography
+    #   pyzmq
+charset-normalizer==3.5.2
+    # via requests
+click==8.1.8
+    # via
+    #   iql-halfcheetah
+    #   typer
+cloudpickle==3.1.2
+    # via gymnasium
+colorama==0.4.6 ; (os_name != 'nt' and sys_platform == 'win32') or (os_name == 'nt' and sys_platform != 'darwin')
+    # via
+    #   build
+    #   click
+    #   ipython
+    #   pytest
+    #   tqdm
+comm==0.2.3
+    # via ipykernel
+contourpy==1.3.3
+    # via matplotlib
+cryptography==50.0.2
+    # via google-auth
+cycler==0.12.1
+    # via matplotlib
+debugpy==1.8.22
+    # via ipykernel
+decorator==5.3.1
+    # via moviepy
+defusedxml==0.7.1
+    # via nbconvert
+etils==1.14.0
+    # via mujoco
+executing==2.2.1
+    # via stack-data
+farama-notifications==0.0.6
+    # via gymnasium
+fastjsonschema==2.22.2
+    # via nbformat
+filelock==4.0.10
+    # via
+    #   huggingface-hub
+    #   torch
+fonttools==4.66.1
+    # via matplotlib
+fqdn==1.6.0
+    # via jsonschema
+fsspec==2026.9.0
+    # via
+    #   etils
+    #   huggingface-hub
+    #   torch
+glfw==2.10.2
+    # via mujoco
+google-api-core==2.40.0
+    # via
+    #   google-cloud-core
+    #   google-cloud-storage
+google-auth==2.59.1
+    # via
+    #   google-api-core
+    #   google-cloud-core
+    #   google-cloud-storage
+google-cloud-core==2.8.0
+    # via google-cloud-storage
+google-cloud-storage==3.16.0
+    # via minari
+google-crc32c==1.9.0
+    # via
+    #   google-cloud-storage
+    #   google-resumable-media
+google-resumable-media==2.11.0
+    # via google-cloud-storage
+googleapis-common-protos==1.75.5
+    # via google-api-core
+gymnasium==1.2.2
+    # via
+    #   iql-halfcheetah
+    #   minari
+h11==0.16.0
+    # via httpcore
+h5py==3.14.0
+    # via
+    #   iql-halfcheetah
+    #   minari
+hf-xet==1.6.0 ; platform_machine == 'AMD64' or platform_machine == 'aarch64' or platform_machine == 'amd64' or platform_machine == 'arm64' or platform_machine == 'x86_64'
+    # via huggingface-hub
+httpcore==1.0.9
+    # via httpx
+httpx==0.28.1
+    # via
+    #   huggingface-hub
+    #   jupyterlab
+huggingface-hub==1.13.0
+    # via minari
+idna==3.20
+    # via
+    #   anyio
+    #   httpx
+    #   jsonschema
+    #   requests
+imageio==2.38.0
+    # via
+    #   gymnasium
+    #   moviepy
+imageio-ffmpeg==0.6.0
+    # via moviepy
+iniconfig==2.3.0
+    # via pytest
+ipykernel==7.4.0
+    # via jupyterlab
+ipython==9.17.1
+    # via ipykernel
+ipython-pygments-lexers==1.1.1
+    # via ipython
+isoduration==20.11.0
+    # via jsonschema
+jedi==0.20.0
+    # via ipython
+jinja2==3.1.6
+    # via
+    #   jupyter-server
+    #   jupyterlab
+    #   jupyterlab-server
+    #   nbconvert
+    #   torch
+json5==0.15.0
+    # via jupyterlab-server
+jsonpointer==3.1.1
+    # via jsonschema
+jsonschema==4.26.0
+    # via
+    #   jupyter-events
+    #   jupyterlab-server
+    #   nbformat
+jsonschema-specifications==2025.9.1
+    # via jsonschema
+jupyter-client==8.10.0
+    # via
+    #   ipykernel
+    #   jupyter-server
+    #   nbclient
+jupyter-core==5.9.1
+    # via
+    #   ipykernel
+    #   jupyter-client
+    #   jupyter-server
+    #   jupyterlab
+    #   nbclient
+    #   nbconvert
+    #   nbformat
+jupyter-events==0.12.1
+    # via jupyter-server
+jupyter-lsp==2.3.1
+    # via jupyterlab
+jupyter-server==2.21.1
+    # via
+    #   jupyter-lsp
+    #   jupyterlab
+    #   jupyterlab-server
+    #   notebook-shim
+jupyter-server-terminals==0.5.4
+    # via jupyter-server
+jupyterlab==4.4.9
+    # via iql-halfcheetah
+jupyterlab-pygments==0.3.0
+    # via nbconvert
+jupyterlab-server==2.28.1
+    # via jupyterlab
+kiwisolver==1.5.1
+    # via matplotlib
+lark==1.3.1
+    # via rfc3987-syntax
+markdown-it-py==4.2.0
+    # via rich
+markupsafe==3.0.4
+    # via
+    #   jinja2
+    #   nbconvert
+matplotlib==3.10.6
+    # via
+    #   gymnasium
+    #   iql-halfcheetah
+    #   seaborn
+matplotlib-inline==0.2.2
+    # via
+    #   ipykernel
+    #   ipython
+mdurl==0.1.2
+    # via markdown-it-py
+minari==0.5.3
+    # via iql-halfcheetah
+mistune==3.3.4
+    # via nbconvert
+moviepy==2.2.1
+    # via gymnasium
+mpmath==1.3.0
+    # via sympy
+mujoco==3.3.7
+    # via
+    #   gymnasium
+    #   iql-halfcheetah
+nbclient==0.11.0
+    # via nbconvert
+nbconvert==7.17.1
+    # via jupyter-server
+nbformat==5.10.4
+    # via
+    #   iql-halfcheetah
+    #   jupyter-server
+    #   nbclient
+    #   nbconvert
+nest-asyncio2==1.7.3
+    # via ipykernel
+networkx==3.6.1
+    # via torch
+notebook-shim==0.2.4
+    # via jupyterlab
+numpy==2.2.6
+    # via
+    #   contourpy
+    #   gymnasium
+    #   h5py
+    #   imageio
+    #   iql-halfcheetah
+    #   matplotlib
+    #   minari
+    #   moviepy
+    #   mujoco
+    #   opencv-python
+    #   pandas
+    #   seaborn
+opencv-python==5.0.0.93
+    # via gymnasium
+opentelemetry-api==1.45.0
+    # via google-api-core
+overrides==7.7.0
+    # via jupyter-server
+packaging==26.3
+    # via
+    #   build
+    #   gymnasium
+    #   huggingface-hub
+    #   ipykernel
+    #   jupyter-events
+    #   jupyter-server
+    #   jupyterlab
+    #   jupyterlab-server
+    #   matplotlib
+    #   minari
+    #   nbconvert
+    #   pytest
+pandas==2.3.2
+    # via
+    #   iql-halfcheetah
+    #   seaborn
+pandocfilters==1.5.1
+    # via nbconvert
+parso==0.8.7
+    # via jedi
+pexpect==4.9.0 ; sys_platform != 'emscripten' and sys_platform != 'win32'
+    # via ipython
+pillow==11.3.0
+    # via
+    #   imageio
+    #   matplotlib
+    #   moviepy
+platformdirs==4.12.3
+    # via jupyter-core
+pluggy==1.6.0
+    # via pytest
+proglog==0.1.12
+    # via moviepy
+prometheus-client==0.26.0
+    # via jupyter-server
+prompt-toolkit==3.0.53
+    # via ipython
+proto-plus==1.29.0
+    # via google-api-core
+protobuf==7.36.2
+    # via
+    #   google-api-core
+    #   googleapis-common-protos
+    #   proto-plus
+psutil==7.2.2 ; sys_platform != 'cygwin' and sys_platform != 'emscripten'
+    # via ipython
+ptyprocess==0.7.0 ; os_name != 'nt' or (sys_platform != 'emscripten' and sys_platform != 'win32')
+    # via
+    #   pexpect
+    #   terminado
+pure-eval==0.2.4
+    # via stack-data
+pyasn1==0.6.4
+    # via pyasn1-modules
+pyasn1-modules==0.4.2
+    # via google-auth
+pycparser==3.0 ; implementation_name != 'PyPy'
+    # via cffi
+pygments==2.21.0
+    # via
+    #   ipython
+    #   ipython-pygments-lexers
+    #   nbconvert
+    #   pytest
+    #   rich
+pyopengl==3.1.10
+    # via mujoco
+pyparsing==3.3.3
+    # via matplotlib
+pyproject-hooks==1.3.3
+    # via build
+pytest==8.4.2
+    # via iql-halfcheetah
+python-dateutil==2.9.0.post0
+    # via
+    #   arrow
+    #   jupyter-client
+    #   matplotlib
+    #   pandas
+python-dotenv==1.2.4
+    # via moviepy
+python-json-logger==4.2.0
+    # via jupyter-events
+pytz==2026.5
+    # via pandas
+pywinpty==3.0.5 ; os_name == 'nt' and sys_platform != 'darwin'
+    # via
+    #   jupyter-server
+    #   jupyter-server-terminals
+    #   terminado
+pyyaml==6.0.3
+    # via
+    #   huggingface-hub
+    #   jupyter-events
+pyzmq==27.2.0
+    # via
+    #   ipykernel
+    #   jupyter-client
+    #   jupyter-server
+referencing==0.37.0
+    # via
+    #   jsonschema
+    #   jsonschema-specifications
+    #   jupyter-events
+requests==2.34.2
+    # via
+    #   google-api-core
+    #   google-cloud-storage
+    #   jupyterlab-server
+rfc3339-validator==0.1.4
+    # via
+    #   jsonschema
+    #   jupyter-events
+rfc3986-validator==0.1.1
+    # via
+    #   jsonschema
+    #   jupyter-events
+rfc3987-syntax==1.1.0
+    # via jsonschema
+rich==15.0.0
+    # via typer
+rpds-py==2026.6.3
+    # via
+    #   jsonschema
+    #   referencing
+ruff==0.13.2
+    # via iql-halfcheetah
+seaborn==0.13.2
+    # via gymnasium
+send2trash==2.1.0
+    # via jupyter-server
+setuptools==84.0.0
+    # via jupyterlab
+shellingham==1.5.4
+    # via typer
+six==1.17.0
+    # via
+    #   python-dateutil
+    #   rfc3339-validator
+soupsieve==2.10
+    # via beautifulsoup4
+stack-data==0.6.3
+    # via ipython
+sympy==1.14.0
+    # via torch
+terminado==0.18.1
+    # via
+    #   jupyter-server
+    #   jupyter-server-terminals
+tinycss2==1.5.1
+    # via bleach
+torch==2.7.1 ; sys_platform == 'darwin'
+    # via iql-halfcheetah
+torch==2.7.1+cpu ; sys_platform != 'darwin'
+    # via iql-halfcheetah
+tornado==6.5.10
+    # via
+    #   ipykernel
+    #   jupyter-client
+    #   jupyter-server
+    #   jupyterlab
+    #   terminado
+tqdm==4.70.1
+    # via
+    #   huggingface-hub
+    #   minari
+    #   proglog
+traitlets==5.16.1
+    # via
+    #   ipykernel
+    #   ipython
+    #   jupyter-client
+    #   jupyter-core
+    #   jupyter-events
+    #   jupyter-server
+    #   jupyterlab
+    #   matplotlib-inline
+    #   nbclient
+    #   nbconvert
+    #   nbformat
+typer==0.12.5
+    # via
+    #   huggingface-hub
+    #   iql-halfcheetah
+    #   minari
+typing-extensions==4.16.0
+    # via
+    #   anyio
+    #   beautifulsoup4
+    #   etils
+    #   gymnasium
+    #   huggingface-hub
+    #   ipython
+    #   jupyter-client
+    #   minari
+    #   opentelemetry-api
+    #   referencing
+    #   torch
+    #   typer
+tzdata==2026.5
+    # via
+    #   arrow
+    #   pandas
+uri-template==1.3.0
+    # via jsonschema
+urllib3==2.8.0
+    # via requests
+wcwidth==0.9.1
+    # via prompt-toolkit
+webcolors==25.10.0
+    # via jsonschema
+webencodings==0.6.1
+    # via
+    #   bleach
+    #   tinycss2
+websocket-client==1.9.2
+    # via jupyter-server
+zipp==4.1.1
+    # via etils

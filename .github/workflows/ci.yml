@@ -1,0 +1,40 @@
+name: Scaffold CI
+on:
+  push:
+    branches: [main, 'feature/**']
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  scaffold:
+    name: Scaffold checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install locked environment
+        run: |
+          python -m pip install uv==0.8.22
+          uv sync --frozen --extra dev --extra notebook
+      - name: Check dependencies and exported requirements
+        run: |
+          uv pip check
+          uv export --frozen --all-extras --no-emit-project --no-hashes --no-header -o /tmp/requirements.lock.txt
+          diff requirements.lock.txt /tmp/requirements.lock.txt
+      - name: Lint and format
+        run: |
+          uv run --frozen ruff check .
+          uv run --frozen ruff format --check .
+      - name: Contract tests
+        run: uv run --frozen pytest
+      - name: Config and real environment smoke
+        run: |
+          uv run --frozen iql-project check --config configs/halfcheetah.toml
+          uv run --frozen python scripts/check_environment.py
+          uv run --frozen python scripts/check_notebook.py
+      - name: Build wheel and source distribution
+        run: uv run --frozen python -m build
