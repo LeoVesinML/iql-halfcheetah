@@ -12,7 +12,7 @@ import json
 import platform
 import random
 import time
-from dataclasses import asdict
+from dataclasses import asdict, fields
 from pathlib import Path
 from typing import Any
 
@@ -21,7 +21,12 @@ import torch
 
 from .config import ProjectConfig
 from .dataset import load_offline_dataset
-from .iql import IQLAgent, runtime_versions, source_commit
+from .iql import IQLAgent, config_from_checkpoint, runtime_versions, source_commit
+
+# Continuation controls. Every other ProjectConfig field must match the checkpoint.
+# learning_rate is not overridable: Adam restores it from optimizer state, so a new
+# value would be written into the manifest while the update still uses the old rate.
+RESUME_OVERRIDES = frozenset({"checkpoint_interval", "total_steps"})
 
 
 def train(
@@ -31,11 +36,21 @@ def train(
     resume: Path | None = None,
     download: bool = False,
 ) -> Path:
-    """Train on the fixed offline dataset and return the final checkpoint path."""
+    """Train on the fixed offline dataset and return the final checkpoint path.
+
+    On resume, only ``total_steps`` and ``checkpoint_interval`` may differ from
+    the checkpoint. Algorithm settings, including ``learning_rate``, must match
+    the optimizer state that ``load`` restores.
+    """
     run_dir = Path(run_dir)
     resume_path = Path(resume) if resume is not None else None
     if resume_path is not None and not resume_path.is_file():
         raise FileNotFoundError(f"Resume checkpoint not found: {resume_path}")
+    resume_changes = (
+        None
+        if resume_path is None
+        else resume_config_overrides(config, config_from_checkpoint(resume_path))
+    )
     run_id = run_dir.name
     if not run_id or run_id in {".", ".."}:
         raise ValueError("run_dir must end with a run id")
@@ -104,9 +119,47 @@ def train(
         checkpoint_dir=checkpoint_dir,
         final_checkpoint=final_checkpoint,
         resume_path=resume_path,
+        resume_overrides=resume_changes,
         invocation_seconds=time.perf_counter() - started,
     )
     return final_checkpoint
+
+
+def resume_config_overrides(
+    requested: ProjectConfig, checkpoint: ProjectConfig
+) -> dict[str, dict[str, Any]]:
+    """Return permitted resume edits. Reject every other difference.
+
+    The returned mapping is ``{field: {"checkpoint": old, "requested": new}}``
+    for fields in ``RESUME_OVERRIDES`` that actually changed.
+    """
+    overrides: dict[str, dict[str, Any]] = {}
+    rejected: list[str] = []
+    for field in fields(ProjectConfig):
+        saved = getattr(checkpoint, field.name)
+        current = getattr(requested, field.name)
+        if current == saved:
+            continue
+        if field.name in RESUME_OVERRIDES:
+            overrides[field.name] = {"checkpoint": saved, "requested": current}
+        else:
+            rejected.append(f"{field.name} (checkpoint {saved}, requested {current})")
+    if rejected:
+        allowed = ", ".join(sorted(RESUME_OVERRIDES))
+        changes = "; ".join(rejected)
+        raise ValueError(
+            f"Resume config must match the checkpoint except for {allowed}. "
+            f"Rejected changes: {changes}"
+        )
+    return overrides
+
+
+def _optimizer_learning_rates(agent: IQLAgent) -> dict[str, float]:
+    return {
+        "q": float(agent.q_optimizer.param_groups[0]["lr"]),
+        "v": float(agent.v_optimizer.param_groups[0]["lr"]),
+        "policy": float(agent.policy_optimizer.param_groups[0]["lr"]),
+    }
 
 
 def _checkpoint_dir(run_dir: Path, run_id: str) -> Path:
@@ -163,6 +216,7 @@ def _write_manifest(
     checkpoint_dir: Path,
     final_checkpoint: Path,
     resume_path: Path | None,
+    resume_overrides: dict[str, dict[str, Any]] | None,
     invocation_seconds: float,
 ) -> None:
     metadata = dataset.metadata
@@ -176,6 +230,17 @@ def _write_manifest(
             dataset.info.action_high,
         )
     )
+    optimizer_learning_rates = _optimizer_learning_rates(agent)
+    mismatched = [
+        f"{name}={rate}"
+        for name, rate in optimizer_learning_rates.items()
+        if rate != config.learning_rate
+    ]
+    if mismatched:
+        raise RuntimeError(
+            "Refusing to record learning_rate "
+            f"{config.learning_rate}; optimizers are using {', '.join(mismatched)}"
+        )
     artifacts = [_artifact(log_path, "training_log")]
     artifacts.extend(
         _artifact(path, "checkpoint") for path in sorted(checkpoint_dir.glob("step_*.pt"))
@@ -208,6 +273,8 @@ def _write_manifest(
         "elapsed_seconds": agent.elapsed_seconds,
         "invocation_seconds": invocation_seconds,
         "updates_completed": agent.step,
+        "optimizer_learning_rates": optimizer_learning_rates,
+        "resume_overrides": resume_overrides,
         "resumed_from": None if resume_path is None else _display_path(resume_path),
         "final_checkpoint": _display_path(final_checkpoint),
         "artifacts": artifacts,

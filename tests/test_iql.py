@@ -411,6 +411,50 @@ def test_resume_in_the_same_directory_appends_steps(tmp_path, monkeypatch):
         train(config, run_dir=run_dir)
 
 
+def test_resume_rejects_a_learning_rate_the_optimizers_will_not_use(tmp_path, monkeypatch):
+    monkeypatch.setattr(
+        "iql_project.train.load_offline_dataset",
+        lambda config, download=False: make_dataset(),
+    )
+    config = make_config(total_steps=1, checkpoint_interval=1, learning_rate=3e-4, seed=0)
+    checkpoint = train(config, run_dir=tmp_path / "results" / "original")
+    payload = torch.load(checkpoint, map_location="cpu", weights_only=False)
+    saved_rates = [
+        group["lr"]
+        for name in ("q", "v", "policy")
+        for group in payload["optimizers"][name]["param_groups"]
+    ]
+    assert saved_rates == [3e-4, 3e-4, 3e-4]
+    assert payload["config"]["learning_rate"] == 3e-4
+
+    changed = replace(config, learning_rate=1e-3, total_steps=2)
+    with pytest.raises(ValueError, match=r"learning_rate \(checkpoint 0.0003, requested 0.001\)"):
+        train(changed, run_dir=tmp_path / "results" / "misrecorded", resume=checkpoint)
+    assert not (tmp_path / "results" / "misrecorded").exists()
+
+
+def test_resume_records_permitted_overrides_and_the_optimizer_learning_rate(tmp_path, monkeypatch):
+    dataset = make_dataset()
+    monkeypatch.setattr(
+        "iql_project.train.load_offline_dataset",
+        lambda config, download=False: dataset,
+    )
+    config = make_config(total_steps=1, checkpoint_interval=1, learning_rate=3e-4, seed=0)
+    checkpoint = train(config, run_dir=tmp_path / "results" / "original")
+    continued = replace(config, total_steps=2, checkpoint_interval=2)
+    final = train(continued, run_dir=tmp_path / "results" / "continued", resume=checkpoint)
+    manifest = json.loads((tmp_path / "results" / "continued" / "manifest.json").read_text())
+    assert manifest["config"]["learning_rate"] == 3e-4
+    assert manifest["optimizer_learning_rates"] == {"q": 3e-4, "v": 3e-4, "policy": 3e-4}
+    assert manifest["resume_overrides"] == {
+        "checkpoint_interval": {"checkpoint": 1, "requested": 2},
+        "total_steps": {"checkpoint": 1, "requested": 2},
+    }
+    restored = torch.load(final, map_location="cpu", weights_only=False)
+    assert restored["config"]["learning_rate"] == 3e-4
+    assert [group["lr"] for group in restored["optimizers"]["q"]["param_groups"]] == [3e-4]
+
+
 def test_resume_rejects_a_log_from_a_different_step(tmp_path, monkeypatch):
     monkeypatch.setattr(
         "iql_project.train.load_offline_dataset",

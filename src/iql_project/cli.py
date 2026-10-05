@@ -15,10 +15,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--config", help="Flat TOML config; omit for built-in defaults")
     parser.add_argument("--run-dir", type=Path, help="Results directory, normally results/<run_id>")
     parser.add_argument(
-        "--resume", type=Path, help="Checkpoint to resume; step and RNGs are restored"
+        "--resume",
+        type=Path,
+        help="Checkpoint to resume. Only total_steps and checkpoint_interval may change",
     )
     parser.add_argument(
-        "--total-steps", type=int, help="Override config.total_steps for this process"
+        "--total-steps",
+        type=int,
+        help="Permitted resume override of config.total_steps",
     )
     parser.add_argument(
         "--download",

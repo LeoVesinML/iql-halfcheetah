@@ -102,8 +102,16 @@ uv run --frozen iql-project train --config configs/halfcheetah.toml \
 ```
 
 `--download` is opt-in. Without it, a missing Minari cache raises
-`FileNotFoundError` before any run directory is created. `--total-steps`
-overrides the config for that process only.
+`FileNotFoundError` before any run directory is created.
+
+Resume restores Adam, including each parameter group's learning rate. The
+requested config must therefore match the checkpoint except for two continuation
+controls: `total_steps` and `checkpoint_interval`. A different `learning_rate`,
+discount, expectile, temperature, batch size, seed, device or dataset id is
+rejected before a manifest is written. `--total-steps` is the command-line form
+of the `total_steps` override. The manifest's `config.learning_rate` matches
+`optimizer_learning_rates`, and `resume_overrides` lists only the permitted
+fields that changed.
 
 `train(config, run_dir=...)` seeds Python, NumPy and PyTorch from `config.seed`
 before the networks are created, then draws batches with
